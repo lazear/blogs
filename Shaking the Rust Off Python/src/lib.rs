@@ -33,11 +33,8 @@ fn count_kmers_multithread_fx_hashmap(sequences: Vec<String>, k: usize) -> Py<Py
         .par_iter()
         .map(|sequence| {
             let mut map: FxHashMap<_, u32> = FxHashMap::default();
-            // Use built-in windows iterator to give us k-mers - less math!
-            for window in sequence.as_bytes().windows(k) {
-                // SAFETY: window is valid UTF-8, since we got it from sequence.as_bytes()!
-                let s = unsafe { std::str::from_utf8_unchecked(window) };
-                *map.entry(s).or_insert(0) += 1;
+            for i in 0..sequence.len() - k + 1 {
+                *map.entry(&sequence[i..i + k]).or_insert(0) += 1;
             }
             map
         })
