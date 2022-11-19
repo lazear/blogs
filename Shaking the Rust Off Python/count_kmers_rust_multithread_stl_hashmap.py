@@ -53,7 +53,7 @@ def count_kmers_rust_multithread_stl_hashmap(fasta_file: str,
 
     # Step 2. Run
     start_time_2 = time.time()
-    results = scripts.count_kmers_multithread_stl_hashmap(sequences, k, num_processes)
+    results = scripts.count_kmers_multithread_stl_hashmap(sequences, k)
     end_time_2 = time.time()
 
     # Step 3. Merge dictionaries into one
